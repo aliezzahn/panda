@@ -1,7 +1,7 @@
 import type { LayerStyles, TextStyles } from './composition'
 import type { RecipeConfig, SlotRecipeConfig } from './recipe'
 import type { CssKeyframes } from './system-types'
-import type { SemanticTokens, Tokens } from './tokens'
+import type { ComponentTokens, SemanticTokens, Tokens } from './tokens'
 
 export interface Theme {
   /**
@@ -20,6 +20,10 @@ export interface Theme {
    * The semantic design tokens for your project.
    */
   semanticTokens?: SemanticTokens
+  /**
+   * The components design tokens for your project.
+   */
+  componentTokens?: ComponentTokens
   /**
    * The typography styles for your project.
    */

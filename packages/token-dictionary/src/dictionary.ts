@@ -1,5 +1,5 @@
 import { compact, isString, mapObject, memo, walkObject } from '@pandacss/shared'
-import type { SemanticTokens, Tokens } from '@pandacss/types'
+import type { ComponentTokens, SemanticTokens, Tokens } from '@pandacss/types'
 import { isMatching, match } from 'ts-pattern'
 import { isCompositeTokenValue } from './is-composite'
 import { Token } from './token'
@@ -23,6 +23,7 @@ export interface TokenTransformer {
 export interface TokenDictionaryOptions {
   tokens?: Tokens
   semanticTokens?: SemanticTokens
+  componentTokens?: ComponentTokens
   breakpoints?: Record<string, string>
   prefix?: string
   hash?: boolean
@@ -56,7 +57,7 @@ export class TokenDictionary {
   }
 
   constructor(options: TokenDictionaryOptions) {
-    const { tokens = {}, semanticTokens = {}, breakpoints, prefix, hash } = options
+    const { tokens = {}, semanticTokens = {}, componentTokens = {}, breakpoints, prefix, hash } = options
 
     const breakpointTokens = expandBreakpoints(breakpoints)
 
@@ -119,6 +120,22 @@ export class TokenDictionary {
           conditions: value,
           prop: path.slice(1).join('.'),
         })
+
+        this.allTokens.push(node)
+      },
+      { stop: isToken },
+    )
+
+    walkObject(
+      componentTokens,
+      (token, path) => {
+        path = filterDefault(path)
+        assertTokenFormat(token)
+
+        const name = path.join('.')
+        const node = new Token({ ...token, name, path })
+
+        node.setExtensions({ category: 'components', prop: path.slice(-1) })
 
         this.allTokens.push(node)
       },

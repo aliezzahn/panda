@@ -1,4 +1,5 @@
 import type {
+  ComponentTokens,
   CompositionStyles,
   Config,
   CssKeyframes,
@@ -83,6 +84,10 @@ function createProxy<T>(): ProxyValue<T> {
 
 export const defineTokens = /* @__PURE__ */ createProxy<Tokens>()
 export const defineSemanticTokens = /* @__PURE__ */ createProxy<SemanticTokens>()
+
+export function defineComponentTokens<T extends ComponentTokens>(definition: T) {
+  return definition
+}
 
 export function defineTextStyles(definition: CompositionStyles['textStyles']) {
   return definition

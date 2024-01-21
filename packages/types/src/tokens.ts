@@ -100,4 +100,8 @@ export type SemanticTokens<ConditionKey extends string = string> = {
   [key in keyof TokenDataTypes]?: Recursive<SemanticToken<TokenDataTypes[key], ConditionKey>>
 }
 
+export type ComponentTokens = {
+  [key: string]: Recursive<Token<string>>
+}
+
 export type TokenCategory = keyof TokenDataTypes
