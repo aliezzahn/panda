@@ -108,9 +108,9 @@ export interface ExtendableOptions {
 }
 
 export interface ImportMapInput {
-  css: string | string[]
-  recipes: string | string[]
-  patterns: string | string[]
+  css?: string | string[]
+  recipes?: string | string[]
+  patterns?: string | string[]
   jsx?: string | string[]
 }
 
